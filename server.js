@@ -8,10 +8,10 @@ const jwt = require("jsonwebtoken")
 require("dotenv").config();
 const app = express();
 const PORT = process.env.PORT || 7070;
+app.use(express.json());
 
 // Middleware
 app.use(cors());
-app.use(express.json());
 // const authenticateToken = require("./middleware")
 // app.use(authenticateToken)
 
