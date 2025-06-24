@@ -12,7 +12,7 @@ app.use(cors());
 app.use(express.json());
 
 // Connessione MongoDB
-mongoose.connect('mongodb://localhost:27017/inventario', {
+mongoose.connect(process.env.MONGO_DB, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });

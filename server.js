@@ -29,7 +29,7 @@ function verificaToken(req, res, next) {
 }
 
 // Connessione MongoDB
-mongoose.connect('mongodb+srv://andreabramucci:HcvlnZT1IDuJrzjV@inventario.k0r6ima.mongodb.net/', {
+mongoose.connect(process.env.MONGO_DB, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
