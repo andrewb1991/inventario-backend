@@ -12,5 +12,4 @@ const authenticateToken = (req, res, next) => {
     res.status(400).send('Token non valido');
   }
 };
-
 module.exports = authenticateToken;
