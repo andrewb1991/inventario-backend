@@ -288,76 +288,76 @@ app.delete('/api/utilizzi', async (req, res) => {
 });
 
 // // Utenti
-// app.get('/api/utenti', async (req, res) => {
-//   try {
-//     const utenti = await Utente.find().sort({ nomeUtente: 1 });
-//     res.json(utenti);
-//   } catch (error) {
-//     res.status(500).json({ message: error.message });
-//   }
-// });
+app.get('/api/utenti', async (req, res) => {
+  try {
+    const utenti = await Utente.find().sort({ nomeUtente: 1 });
+    res.json(utenti);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
 // // Login Utenti
-// app.get("api/login", async(req, res)=>{
-//     try {
-//         const allutenti = await Utente.find()
-//         res.status(200).send(allutenti)
-//     } catch (error) {
-//         res.status(500).send({
-//         message: "Internal server error",
-//         error: error    
-//         })
-//     }
+app.get("api/login", async(req, res)=>{
+    try {
+        const allutenti = await Utente.find()
+        res.status(200).send(allutenti)
+    } catch (error) {
+        res.status(500).send({
+        message: "Internal server error",
+        error: error    
+        })
+    }
 
-// })
+})
 
 // // Registrazione Utenti
-// app.post("/api/register", async(req, res)=>{
-//     const salt = await bcrypt.genSalt(10)
-//     const hashpassword = await bcrypt.hash(req.body.passwordUtente, salt)
-//     const utente = new Utente({
-//     nomeUtente: req.body.nomeUtente,
-//     cognomeUtente: req.body.cognomeUtente,
-//     mailUtente: req.body.mailUtente,
-//     passwordUtente: hashpassword,
-//     })
-// try {
-//     const newutente = await utente.save()
-//     res.status(200).send({
-//         message: "Utente aggiunto",
-//         payload: newutente,
-//     })
-// } catch (error) {
-//     res.status(500).send({
-//         message: "Internal Server Error",
-//         error: error,
-//     })
-// }
-// })
+app.post("/api/register", async(req, res)=>{
+    const salt = await bcrypt.genSalt(10)
+    const hashpassword = await bcrypt.hash(req.body.passwordUtente, salt)
+    const utente = new Utente({
+    nomeUtente: req.body.nomeUtente,
+    cognomeUtente: req.body.cognomeUtente,
+    mailUtente: req.body.mailUtente,
+    passwordUtente: hashpassword,
+    })
+try {
+    const newutente = await utente.save()
+    res.status(200).send({
+        message: "Utente aggiunto",
+        payload: newutente,
+    })
+} catch (error) {
+    res.status(500).send({
+        message: "Internal Server Error",
+        error: error,
+    })
+}
+})
 
 // // Login a seguito registrazione
 
-// app.post("/api/login", async(req, res)=>{
-//     const utente = await Utente.findOne({
-//     mailUtente: req.body.mailUtente,
-//     })
-//     if(!utente){
-//     return res.status(400).send("Utente non trovato")
-//     }
-//     const validPassword = await bcrypt.compare(req.body.passwordUtente, utente.passwordUtente)
-//     if(!validPassword){
-//     return res.status(400).send("Password non valida")
-//     }
-//     const token = jwt.sign({
-//         name: utente.nomeUtente,
-//         surname: utente.cognomeUtente,
-//         email: utente.mailUtente,
-//         id: utente._id,
-//     }, process.env.JWT_SECRET, {expiresIn: "15m"})
-//     res.header("Authorization", token).status(200).send(
-//     token
-//     )
-//     })
+app.post("/api/login", async(req, res)=>{
+    const utente = await Utente.findOne({
+    mailUtente: req.body.mailUtente,
+    })
+    if(!utente){
+    return res.status(400).send("Utente non trovato")
+    }
+    const validPassword = await bcrypt.compare(req.body.passwordUtente, utente.passwordUtente)
+    if(!validPassword){
+    return res.status(400).send("Password non valida")
+    }
+    const token = jwt.sign({
+        name: utente.nomeUtente,
+        surname: utente.cognomeUtente,
+        email: utente.mailUtente,
+        id: utente._id,
+    }, process.env.JWT_SECRET, {expiresIn: "15m"})
+    res.header("Authorization", token).status(200).send(
+    token
+    )
+    })
 
 
 
